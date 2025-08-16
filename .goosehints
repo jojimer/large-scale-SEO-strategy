@@ -1,0 +1,27 @@
+Project Overview:
+- Large-scale SEO website that aims to generate over 342,000 pages (38,000 cities * 9 services) using Incremental Static Regeneration (ISR)
+
+Key features:
+1. Using Incremental Static Regeneration (ISR) to generate pages on-demand and cache them.
+2. For the first visit to a page that hasn't been generated, we generate the AI content, save it to the database, and then serve the page with ISR caching for subsequent requests.
+3. We must avoid duplicate content and implement E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) in our AI-generated content.
+
+Key components of the solution:
+### Tech Stack
+- **Next.js**: For the framework, using App Router and ISR. View [NextJS documentation] (https://nextjs.org/docs) for extended guidance.
+- **OpenRouter/google/gemini-2.0-flash-001**: For dynamic content generation of Tier A (top 1–3k pages): 2,000–4,000 words. View [OpenRouter Docs] (https://openrouter.ai/docs/api-reference/overview) for extended guidance.
+- **Supabase**: As the database to store cities, topics, and generated content. View [Supabase NextJS docs] (https://supabase.com/docs/guides/getting-started/quickstarts/nextjs) for extended guidance.
+- **@faker-js/faker**: For generating fake information of services in every cities. View [FakerJS docs] (https://fakerjs.dev/api/) for extended guidance.
+- **Google Analytics**: For Monitoring and Performance Analysis. View [Google Analytics NextJS docs] (https://nextjs.org/docs/messages/next-script-for-ga) for extended guidance.
+- **Prisma ORM**: For database access (alternative: use Supabase client directly, but Prisma provides type safety). View [Prisma docs] (https://www.prisma.io/docs) for extended guidance.
+- **TailwindCSS**: For styling. View [TailWindCSS docs] (https://v2.tailwindcss.com/docs) for extended guidance.
+- **Playwright**: For end-to-end testing. View [Playwright docs] (https://playwright.dev/docs) for extended guidance.
+- **Additional Tools**:
+  - **Redis/Upstash**: For caching and rate limiting AI API calls.
+  - **Next-Sitemap**: For generating sitemap index and state-specific sitemaps. View [Next-Sitemap docs] (https://www.npmjs.com/package/next-sitemap) for extended guidance.
+
+**Note:** I have NodeJS installed locally use it t start a NextJS project and install project dependencies
+
+### Summary
+The key to solving the problem is to avoid pre-rendering all pages at build time and instead use ISR with on-demand content generation. This ensures that the build completes quickly and pages are generated as they are accessed. We also implement efficient sitemap generation and take SEO best practices into account.
+By following this architecture, we can scale to 342k pages without running into Vercel build timeouts and ensure a good user experience and SEO performance.

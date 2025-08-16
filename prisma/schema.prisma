@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model City {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  state       String
+  slug        String   @unique
+  content     Content[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
+  description String
+  content     Content[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Content {
+  id          Int      @id @default(autoincrement())
+  title       String
+  body        String
+  cityId      Int
+  serviceId   Int
+  city        City     @relation(fields: [cityId], references: [id])
+  service     Service  @relation(fields: [serviceId], references: [id])
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([cityId, serviceId])
+  @@index([cityId, serviceId])
+}
